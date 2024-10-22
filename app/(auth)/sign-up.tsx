@@ -90,7 +90,7 @@ const Chat = () => {
           />
 
           <Link
-            href={"/(auth)/sign-in"}
+            href={"/(root)/(tabs)/home"}
             className="text-lg text-general-200 mt-10 text-center"
           >
             <Text>Already have an account?</Text>

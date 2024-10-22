@@ -23,8 +23,18 @@ import selectedMarker from "@/assets/icons/selected-marker.png";
 import star from "@/assets/icons/star.png";
 import target from "@/assets/icons/target.png";
 import to from "@/assets/icons/to.png";
+import hospital from "@/assets/icons/hospital.png";
+import covid from "@/assets/icons/covid.png";
+import peronPlus from "@/assets/icons/profile-add.png";
+import medicine from "@/assets/icons/link.png";
+import image from "@/assets/icons/image.jpg";
+import clock from "@/assets/icons/clock.png";
+import calender from "@/assets/icons/calendar.png";
 
 export const icons = {
+  clock,
+  calender,
+  image,
   arrowDown,
   arrowUp,
   backArrow,
@@ -32,6 +42,10 @@ export const icons = {
   checkmark,
   close,
   dollar,
+  hospital,
+  medicine,
+  peronPlus,
+  covid,
   email,
   eyecross,
   google,
@@ -51,3 +65,10 @@ export const icons = {
   target,
   to,
 };
+
+export const homeIcons = [
+  { icon: covid, text: "Covid 19" },
+  { icon: peronPlus, text: "Doctor" },
+  { icon: medicine, text: "Medicine" },
+  { icon: hospital, text: "Hospital" },
+];
