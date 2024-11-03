@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import Person from "@/assets/icons/image.svg";
+import CustomButton from "./CustomButton";
 
-const Card = () => {
+const Card = (hasDetails?: boolean) => {
   return (
     <View className="bg-green-500 rounded-xl p-7">
       <View className="flex">
@@ -23,6 +24,8 @@ const Card = () => {
         </View>
         <Text className="text-white text-lg">11:00 - 12:00 AM</Text>
       </View>
+
+      {hasDetails && <CustomButton title="Details" />}
     </View>
   );
 };

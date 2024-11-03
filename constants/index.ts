@@ -9,6 +9,7 @@ import email from "@/assets/icons/email.png";
 import eyecross from "@/assets/icons/eyecross.png";
 import google from "@/assets/icons/google.png";
 import home from "@/assets/icons/home.png";
+import homeActive from "@/assets/icons/home_active.png";
 import list from "@/assets/icons/list.png";
 import lock from "@/assets/icons/lock.png";
 import map from "@/assets/icons/map.png";
@@ -30,8 +31,23 @@ import medicine from "@/assets/icons/link.png";
 import image from "@/assets/icons/image.jpg";
 import clock from "@/assets/icons/clock.png";
 import calender from "@/assets/icons/calendar.png";
+import calenderGray from "@/assets/icons/calendarGray.png";
+import clockGray from "@/assets/icons/clockGray.png";
+import schedule from "@/assets/icons/schedule.png";
+import scheduleActive from "@/assets/icons/schedule_active.png";
+import profileActive from "@/assets/icons/profile_active.png";
+import notification from "@/assets/icons/notification.png";
+import notificationActive from "@/assets/icons/notification_active.png";
 
 export const icons = {
+  schedule,
+  scheduleActive,
+  profileActive,
+  notification,
+  notificationActive,
+  homeActive,
+  clockGray,
+  calenderGray,
   clock,
   calender,
   image,
@@ -71,4 +87,47 @@ export const homeIcons = [
   { icon: peronPlus, text: "Doctor" },
   { icon: medicine, text: "Medicine" },
   { icon: hospital, text: "Hospital" },
+];
+
+export const schedules = [
+  {
+    id: 1,
+    doctorsName: "Dr. Joshua Brostito",
+    date: "",
+    time: "",
+    specialty: "",
+    image: person,
+  },
+  {
+    id: 2,
+    doctorsName: "Dr. Joshua Brostito",
+    date: "",
+    time: "",
+    specialty: "",
+    image: person,
+  },
+  {
+    id: 3,
+    doctorsName: "Dr. Joshua Brostito",
+    date: "",
+    time: "",
+    specialty: "",
+    image: person,
+  },
+  {
+    id: 4,
+    doctorsName: "Dr. Joshua Brostito",
+    date: "",
+    time: "",
+    specialty: "",
+    image: person,
+  },
+  {
+    id: 5,
+    doctorsName: "Dr. Joshua Brostito",
+    date: "",
+    time: "",
+    specialty: "",
+    image: person,
+  },
 ];

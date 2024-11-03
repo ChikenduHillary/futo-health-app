@@ -1,11 +1,15 @@
 import { icons } from "@/constants";
 import { Tabs } from "expo-router";
-import { ImageSourcePropType, View, Image } from "react-native";
+import { ImageSourcePropType, View, Image, Text } from "react-native";
 
 const TabIcon = ({
   source,
   focused,
+  activeSource,
+  title,
 }: {
+  activeSource: ImageSourcePropType;
+  title: string;
   source: ImageSourcePropType;
   focused: boolean;
 }) => (
@@ -15,16 +19,20 @@ const TabIcon = ({
     }`}
   >
     <View
-      className={`rounded-full w-12 h-12 items-center justify-center ${
-        focused ? "bg-general-400" : ""
+      className={`rounded-xl flex p-2 h-12 items-center justify-center ${
+        focused ? " " : ""
       }`}
     >
       <Image
-        source={source}
-        tintColor="white"
+        source={focused ? activeSource : source}
         resizeMode="contain"
         className="w-7 h-7"
       />
+      {focused && (
+        <Text className="text-[#22C55E] h-7 pt-1 font-PoppinsSemiBold tracking-tight">
+          {title}
+        </Text>
+      )}
     </View>
   </View>
 );
@@ -37,11 +45,9 @@ const Layout = () => (
       tabBarInactiveTintColor: "white",
       tabBarShowLabel: false,
       tabBarStyle: {
-        backgroundColor: "#333333",
-        borderRadius: 50,
+        backgroundColor: "#fff",
         paddingBottom: 0,
         overflow: "hidden",
-        marginHorizontal: 20,
         height: 78,
         display: "flex",
         justifyContent: "space-between",
@@ -57,7 +63,12 @@ const Layout = () => (
         title: "Home",
         headerShown: false,
         tabBarIcon: ({ focused }) => (
-          <TabIcon focused={focused} source={icons.home} />
+          <TabIcon
+            focused={focused}
+            source={icons.home}
+            title="Home"
+            activeSource={icons.homeActive}
+          />
         ),
       }}
     />
@@ -67,7 +78,12 @@ const Layout = () => (
         title: "Schedule",
         headerShown: false,
         tabBarIcon: ({ focused }) => (
-          <TabIcon focused={focused} source={icons.list} />
+          <TabIcon
+            focused={focused}
+            source={icons.schedule}
+            title="Schedule"
+            activeSource={icons.scheduleActive}
+          />
         ),
       }}
     />
@@ -77,7 +93,12 @@ const Layout = () => (
         title: "Notifications",
         headerShown: false,
         tabBarIcon: ({ focused }) => (
-          <TabIcon focused={focused} source={icons.chat} />
+          <TabIcon
+            focused={focused}
+            source={icons.notification}
+            title="Notifications"
+            activeSource={icons.notificationActive}
+          />
         ),
       }}
     />
@@ -87,7 +108,12 @@ const Layout = () => (
         title: "Profile",
         headerShown: false,
         tabBarIcon: ({ focused }) => (
-          <TabIcon focused={focused} source={icons.profile} />
+          <TabIcon
+            focused={focused}
+            source={icons.profile}
+            title="Profile"
+            activeSource={icons.profileActive}
+          />
         ),
       }}
     />
