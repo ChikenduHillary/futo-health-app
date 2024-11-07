@@ -97,6 +97,7 @@ export const schedules = [
     time: "",
     specialty: "",
     image: person,
+    status: "pending",
   },
   {
     id: 2,
@@ -105,6 +106,7 @@ export const schedules = [
     time: "",
     specialty: "",
     image: person,
+    status: "approved",
   },
   {
     id: 3,
@@ -113,6 +115,7 @@ export const schedules = [
     time: "",
     specialty: "",
     image: person,
+    status: "handled",
   },
   {
     id: 4,
@@ -121,6 +124,7 @@ export const schedules = [
     time: "",
     specialty: "",
     image: person,
+    status: "approved",
   },
   {
     id: 5,
@@ -129,5 +133,6 @@ export const schedules = [
     time: "",
     specialty: "",
     image: person,
+    status: "pending",
   },
 ];

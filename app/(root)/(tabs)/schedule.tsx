@@ -12,9 +12,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { homeIcons, icons, schedules } from "@/constants";
 import CustomButton from "@/components/CustomButton";
 import Person from "@/assets/icons/image.svg";
+import Icon from "react-native-vector-icons/Feather";
+import { router } from "expo-router";
 
 const Page = () => {
-  const handleSearch = (query: any) => {
+  const handleSearch = (query: string) => {
     console.log("Search query:", query);
   };
 
@@ -36,6 +38,27 @@ const Page = () => {
                   {item.doctorsName}
                 </Text>
                 <Text className="text-gray-500">{item.specialty}</Text>
+              </View>
+              <View
+                className={`p-2 ${
+                  item.status == "pending"
+                    ? "bg-yellow-100"
+                    : item.status == "approved"
+                    ? "bg-green-100"
+                    : "bg-gray-100"
+                } relative bottom-6 left-3 rounded-full`}
+              >
+                <Text
+                  className={`font-Poppins ${
+                    item.status == "pending"
+                      ? "text-yellow-700"
+                      : item.status == "approved"
+                      ? "text-green-700"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {item.status}
+                </Text>
               </View>
             </View>
 
@@ -63,7 +86,18 @@ const Page = () => {
           </View>
         )}
         ListHeaderComponent={() => (
-          <View className="px-5 space-y-5">
+          <View className="px-5 pt-5 space-y-5">
+            <TouchableOpacity
+              style={styles.shadow}
+              className=" flex p-4 rounded-xl bg-white flex-row justify-center items-center"
+              onPress={() => router.push("/(root)/book")}
+            >
+              <Icon name="plus" size={30} color="#000" />
+              <Text className="font-PoppinsSemiBold text-gray-700 text-xl">
+                Book a new appointment
+              </Text>
+            </TouchableOpacity>
+
             <Text className="text-2xl pt-5 tracking-tight text-gray-900 font-PoppinsSemiBold">
               Your Appointments
             </Text>
