@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { homeIcons, icons, schedules } from "@/constants";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+
 import Frame from "@/assets/icons/frame.svg";
 
 const SearchInput = ({ onSearch }: any) => {
@@ -52,6 +54,8 @@ const SearchInput = ({ onSearch }: any) => {
 };
 
 const Page = () => {
+  const { user } = useUser();
+  console.log(user?.firstName, user?.imageUrl);
   const handleSearch = (query: any) => {
     console.log("Search query:", query);
   };
@@ -100,10 +104,13 @@ const Page = () => {
                   Hello
                 </Text>
                 <Text className="text-3xl font-semibold font-PoppinsSemiBold">
-                  Hi Jerry
+                  {user?.fullName}
                 </Text>
               </View>
-              <Frame width={55} height={55} />
+              <Image
+                source={{ uri: user?.imageUrl }}
+                className="rounded-full w-16 h-16"
+              />
             </View>
 
             <View className="bg-green-500 rounded-xl p-7">

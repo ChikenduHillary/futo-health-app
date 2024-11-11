@@ -1,29 +1,57 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView, Text, View } from "react-native";
-import { useState } from "react";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
+import { useState, useCallback } from "react";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
+import { Link, useRouter } from "expo-router";
 
 const Chat = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [verification, setVerification] = useState({
-    state: "",
-    error: "",
-    code: "",
-  });
 
-  const onSignUpPress = async () => {};
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const router = useRouter();
 
-  const onPressVerify = async () => {};
+  const onSignInPress = useCallback(async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password,
+      });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/");
+      } else {
+        // See https://clerk.com/docs/custom-flows/error-handling
+        // for more info on error handling
+        console.error(JSON.stringify(signInAttempt, null, 2));
+      }
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
+      Alert.alert("Error", err.errors[0].longMessage);
+    }
+  }, [isLoaded, form]);
 
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="flex items-center justify-center mt-40 w-full">
-          <Text className="text-3xl">LOGO</Text>
-          <Text className="text-lg text-gray-800 mt-5">Futo Medicals</Text>
+        <View className="flex items-center justify-center mt-20 w-full">
+          <Image
+            source={icons.futoIcon}
+            height={100}
+            width={100}
+            alt="futo logo"
+            className=""
+          />
+          <Text className="text-2xl text-gray-800 font-Poppins mt-7">
+            Futo Medicals
+          </Text>
           <Text className="text-3xl mt-10 self-start ml-5">SIGN IN</Text>
         </View>
 
@@ -47,7 +75,7 @@ const Chat = () => {
 
           <CustomButton
             title="Sign In"
-            onPress={onSignUpPress}
+            onPress={onSignInPress}
             className="mt-6"
           />
 
@@ -55,8 +83,8 @@ const Chat = () => {
             href={"/(auth)/sign-up"}
             className="text-lg text-general-200 mt-10 text-center"
           >
-            <Text>Dont have an account?</Text>
-            <Text className="text-blue-500">Sign Up</Text>
+            <Text className="font-Poppins">Dont have an account?</Text>
+            <Text className="text-blue-500 font-Poppins">Sign Up</Text>
           </Link>
         </View>
       </ScrollView>

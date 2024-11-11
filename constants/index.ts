@@ -38,8 +38,16 @@ import scheduleActive from "@/assets/icons/schedule_active.png";
 import profileActive from "@/assets/icons/profile_active.png";
 import notification from "@/assets/icons/notification.png";
 import notificationActive from "@/assets/icons/notification_active.png";
+import futoIcon from "@/assets/icons/FUTO_logo.png";
+import check2 from "@/assets/icons/check2.png";
+import mobile from "@/assets/icons/mobile.png";
+import date from "@/assets/icons/date.png";
 
 export const icons = {
+  date,
+  mobile,
+  check2,
+  futoIcon,
   schedule,
   scheduleActive,
   profileActive,

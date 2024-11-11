@@ -87,6 +87,9 @@ const Page = () => {
         )}
         ListHeaderComponent={() => (
           <View className="px-5 pt-5 space-y-5">
+            <Text className="text-3xl font-PoppinsSemiBold my-5">
+              Appointments
+            </Text>
             <TouchableOpacity
               style={styles.shadow}
               className=" flex p-4 rounded-xl bg-white flex-row justify-center items-center"
