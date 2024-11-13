@@ -145,7 +145,7 @@ const Page = () => {
               </View>
             </View>
 
-            <View className="w-full">
+            {/* <View className="w-full">
               <SearchInput onSearch={handleSearch} />
             </View>
 
@@ -160,7 +160,7 @@ const Page = () => {
                   </Text>
                 </View>
               ))}
-            </View>
+            </View> */}
             <Text className="text-2xl pt-5 tracking-tight text-gray-900 font-PoppinsSemiBold">
               Your Appointments
             </Text>
