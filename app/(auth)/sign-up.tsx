@@ -124,7 +124,7 @@ const Chat = () => {
           />
 
           <Link
-            href={"/(root)/(tabs)/home"}
+            href={"/(auth)/sign-in"}
             className="text-lg text-general-200 mt-10 text-center"
           >
             <Text className="font-Poppins">Already have an account?</Text>

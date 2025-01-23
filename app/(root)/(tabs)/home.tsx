@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FlatList,
   View,
@@ -11,8 +11,26 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { homeIcons, icons, schedules } from "@/constants";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import axios from "axios";
+import { Redirect } from "expo-router";
 
-import Frame from "@/assets/icons/frame.svg";
+interface DoctorResponse {
+  role: "Doctor";
+  user: {
+    _id: string;
+    name: string;
+    specialization: string;
+    availability: Array<{
+      date: string;
+      slots: Array<{
+        time: string;
+        available: boolean;
+      }>;
+    }>;
+    email: string;
+    __v: number;
+  };
+}
 
 const SearchInput = ({ onSearch }: any) => {
   const [searchText, setSearchText] = useState("");
@@ -55,10 +73,46 @@ const SearchInput = ({ onSearch }: any) => {
 
 const Page = () => {
   const { user } = useUser();
-  console.log(user?.firstName, user?.imageUrl);
+  const [isUserInDatabase, setIsUserInDatabase] = useState(false);
+  const [dataBaseUser, setDataBaseUser] = useState<DoctorResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkUserInDatabase = async () => {
+      if (!user) return;
+
+      try {
+        const response = await axios.get(
+          `https://futo-health-app-backend.onrender.com/api/users/${user?.emailAddresses[0]?.emailAddress}`
+        );
+        if (response?.data) {
+          setDataBaseUser(response.data);
+          setIsUserInDatabase(true);
+        }
+      } catch (error) {
+        console.log("Error checking user:", error);
+        setIsUserInDatabase(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUserInDatabase();
+  }, [user]);
+
   const handleSearch = (query: any) => {
     console.log("Search query:", query);
   };
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (!isUserInDatabase) return <Redirect href={"/(auth)/account-type"} />;
 
   return (
     <SafeAreaView className="bg-white min-h-full pt-10">
@@ -101,10 +155,10 @@ const Page = () => {
             <View className="flex flex-row justify-between items-end pb-5">
               <View>
                 <Text className="text-gray-400 text-xl font-Poppins">
-                  Hello
+                  Hello, {dataBaseUser?.role == "Doctor" ? "Doctor" : ""}
                 </Text>
-                <Text className="text-3xl font-semibold font-PoppinsSemiBold">
-                  {user?.fullName}
+                <Text className="text-xl font-semibold font-PoppinsSemiBold">
+                  {dataBaseUser?.user.name}
                 </Text>
               </View>
               <Image
@@ -174,10 +228,9 @@ const Page = () => {
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: "#5a75a7",
-
     shadowOpacity: 0.2,
-    shadowRadius: 20, // Increase radius for a softer look
-    elevation: 4, // Lower elevation for a less pronounced shadow
+    shadowRadius: 20,
+    elevation: 4,
   },
 });
 

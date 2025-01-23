@@ -39,7 +39,6 @@ const TabIcon = ({
 
 const Layout = () => (
   <Tabs
-    initialRouteName="index"
     screenOptions={{
       tabBarActiveTintColor: "white",
       tabBarInactiveTintColor: "white",

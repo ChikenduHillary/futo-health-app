@@ -1,5 +1,4 @@
 import * as SecureStore from "expo-secure-store";
-import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 
 export interface TokenCache {
   getToken: (key: string) => Promise<string | undefined | null>;

@@ -5,7 +5,12 @@ export default function Layout() {
     <Stack>
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
       <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+      <Stack.Screen name="doctor-onboarding" options={{ headerShown: false }} />
+      <Stack.Screen name="account-type" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="patient-onboarding"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 }

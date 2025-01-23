@@ -8,23 +8,18 @@ import CustomButton from "@/components/CustomButton";
 import RadioGroup from "react-native-radio-buttons-group";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Link } from "expo-router";
+import { fetchAPI } from "@/lib/fetch";
 
 const Chat = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [showSuccessModel, setShowSuccessModel] = useState(false);
   const [selectedId, setSelectedId] = useState<string | undefined>();
   const [phoneNumber, setPhoneNumber] = useState("");
   const phoneInput = useRef(null);
-  const [verification, setVerification] = useState({
-    state: "",
-    error: "",
-    code: "",
-  });
 
   const radioButtons = useMemo(
     () => [
       {
-        id: "1", // acts as primary key, should be unique and non-empty string
+        id: "1",
         label: "Male",
         value: "male",
       },
@@ -52,9 +47,18 @@ const Chat = () => {
     hideDatePicker();
   };
 
-  const onSignUpPress = async () => {};
-
-  const onPressVerify = async () => {};
+  const onboard = async () => {
+    try {
+      await fetchAPI("/(api)/user", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "hillary",
+          email: "email",
+          clerkId: "id",
+        }),
+      });
+    } catch (error) {}
+  };
 
   return (
     <SafeAreaView>
@@ -92,7 +96,7 @@ const Chat = () => {
             autoFocus
           />
 
-          {/* <View>
+          <View>
             <Button title="Show Date Picker" onPress={showDatePicker} />
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -100,16 +104,16 @@ const Chat = () => {
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
-          </View> */}
+          </View>
 
-          {/* <View className="w-full flex items-start">
+          <View className="w-full flex items-start">
             <Text className="text-lg">Gender</Text>
             <RadioGroup
               radioButtons={radioButtons}
               onPress={setSelectedId}
               selectedId={selectedId}
             />
-          </View> */}
+          </View>
 
           <InputField
             label="Health Information"
@@ -136,8 +140,8 @@ const Chat = () => {
           />
 
           <CustomButton
-            title="Sign Up"
-            onPress={onSignUpPress}
+            title="Create Profile"
+            onPress={onboard}
             className="mt-6"
           />
 
