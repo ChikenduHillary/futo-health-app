@@ -1,158 +1,180 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView, Text, View, Button } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useMemo, useRef, useState } from "react";
 import InputField from "@/components/InputField";
-import { icons } from "@/constants";
 import PhoneInput from "react-native-phone-number-input";
 import CustomButton from "@/components/CustomButton";
 import RadioGroup from "react-native-radio-buttons-group";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Link } from "expo-router";
-import { fetchAPI } from "@/lib/fetch";
+import { useUser } from "@clerk/clerk-expo";
+import axios from "axios";
+import { router } from "expo-router";
 
 const Chat = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    dateOfBirth: "",
+    healthInfo: "",
+    conditions: "",
+    history: "",
+    gender: "",
+  });
   const [selectedId, setSelectedId] = useState<string | undefined>();
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const phoneInput = useRef(null);
+  const { user } = useUser();
 
   const radioButtons = useMemo(
     () => [
-      {
-        id: "1",
-        label: "Male",
-        value: "male",
-      },
-      {
-        id: "2",
-        label: "Female",
-        value: "female",
-      },
+      { id: "1", label: "Male", value: "male" },
+      { id: "2", label: "Female", value: "female" },
     ],
     []
   );
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const showDatePicker = () => setDatePickerVisibility(true);
+  const hideDatePicker = () => setDatePickerVisibility(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date: any) => {
-    console.warn("A date has been picked: ", date);
+  const handleDateConfirm = (date: Date) => {
+    setForm({ ...form, dateOfBirth: date.toISOString() });
     hideDatePicker();
   };
 
   const onboard = async () => {
     try {
-      await fetchAPI("/(api)/user", {
-        method: "POST",
-        body: JSON.stringify({
-          name: "hillary",
-          email: "email",
-          clerkId: "id",
-        }),
-      });
-    } catch (error) {}
+      setLoading(true);
+
+      const data = {
+        ...form,
+        email: user?.emailAddresses[0]?.emailAddress || form.email,
+      };
+
+      console.log("Submitting data:", data);
+
+      const response = await axios.post(
+        "https://futo-health-app-backend.onrender.com/api/patients",
+        data
+      );
+
+      router.push("/(root)/(tabs)/home");
+      console.log("Profile created:", response.data);
+    } catch (error) {
+      console.error("Error creating profile:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView className="p-5">
         <View className="flex items-center justify-center mt-20 w-full">
-          <Text className="text-4xl my-10 self-start ml-5">Onboarding</Text>
+          <Text className="text-xl text-zinc-600 self-start">Patient</Text>
+          <Text className="text-4xl mb-10 self-start">Onboarding</Text>
         </View>
 
-        <View className="p-5">
-          <InputField
-            label="Full Name"
-            placeholder="Enter your full name"
-            icon={icons.person}
-            value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value })}
-          />
+        {/* Full Name */}
+        <InputField
+          label="Full Name"
+          placeholder="Enter your full name"
+          value={form.name}
+          onChangeText={(value) => setForm({ ...form, name: value })}
+        />
 
-          <InputField
-            label="Date of Birth"
-            placeholder="Enter your email"
-            icon={icons.email}
-            value={form.email}
-            onChangeText={(value) => setForm({ ...form, email: value })}
-          />
+        {/* Email */}
+        <InputField
+          label="Email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChangeText={(value) => setForm({ ...form, email: value })}
+        />
 
+        {/* Phone Number */}
+        <View className="mb-5">
+          <Text className="text-lg mb-2">Phone Number</Text>
           <PhoneInput
             ref={phoneInput}
-            defaultValue={phoneNumber}
+            defaultValue={form.phoneNumber}
             defaultCode="NG"
             layout="first"
-            onChangeText={(text: string) => setPhoneNumber(text)}
-            onChangeFormattedText={(formattedText) => {
-              console.log(formattedText);
-            }}
+            onChangeText={(value) => setForm({ ...form, phoneNumber: value })}
             autoFocus
           />
-
-          <View>
-            <Button title="Show Date Picker" onPress={showDatePicker} />
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
-
-          <View className="w-full flex items-start">
-            <Text className="text-lg">Gender</Text>
-            <RadioGroup
-              radioButtons={radioButtons}
-              onPress={setSelectedId}
-              selectedId={selectedId}
-            />
-          </View>
-
-          <InputField
-            label="Health Information"
-            placeholder="(optional)"
-            icon={icons.person}
-            value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value })}
-          />
-
-          <InputField
-            label="Pre-existing Conditions"
-            placeholder="(optional) but usefull for doctors"
-            icon={icons.person}
-            value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value })}
-          />
-
-          <InputField
-            label="Medical history"
-            placeholder="(optional)"
-            icon={icons.person}
-            value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value })}
-          />
-
-          <CustomButton
-            title="Create Profile"
-            onPress={onboard}
-            className="mt-6"
-          />
-
-          <Link
-            href={"/(auth)/sign-in"}
-            className="text-lg text-general-200 mt-10 text-center"
-          >
-            <Text>Already have an account?</Text>
-            <Text className="text-blue-500">Log In</Text>
-          </Link>
         </View>
+
+        {/* Date of Birth */}
+        <TouchableOpacity onPress={showDatePicker}>
+          <View pointerEvents="none">
+            <InputField
+              label="Date of Birth"
+              placeholder="Select your date of birth"
+              value={
+                form.dateOfBirth
+                  ? new Date(form.dateOfBirth).toLocaleDateString()
+                  : ""
+              }
+              editable={false}
+            />
+          </View>
+        </TouchableOpacity>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleDateConfirm}
+          onCancel={hideDatePicker}
+        />
+
+        {/* Gender */}
+        <View className="w-full flex items-start mt-4">
+          <Text className="text-lg mb-2">Gender</Text>
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={(id) => {
+              setSelectedId(id);
+              const selectedButton = radioButtons.find((btn) => btn.id === id);
+              if (selectedButton) {
+                setForm({ ...form, gender: selectedButton.value });
+              }
+            }}
+            selectedId={selectedId}
+          />
+        </View>
+
+        {/* Health Information */}
+        <InputField
+          label="Health Information"
+          placeholder="(optional)"
+          value={form.healthInfo}
+          onChangeText={(value) => setForm({ ...form, healthInfo: value })}
+        />
+
+        {/* Pre-existing Conditions */}
+        <InputField
+          label="Pre-existing Conditions"
+          placeholder="(optional) but useful for doctors"
+          value={form.conditions}
+          onChangeText={(value) => setForm({ ...form, conditions: value })}
+        />
+
+        {/* Medical History */}
+        <InputField
+          label="Medical History"
+          placeholder="(optional)"
+          value={form.history}
+          onChangeText={(value) => setForm({ ...form, history: value })}
+        />
+
+        {/* Submit Button */}
+        <CustomButton
+          title={loading ? "Creating Profile..." : "Create Profile"}
+          onPress={onboard}
+          disabled={loading}
+          className="mt-6 mb-20"
+        />
       </ScrollView>
     </SafeAreaView>
   );

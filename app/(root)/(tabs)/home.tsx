@@ -9,8 +9,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { homeIcons, icons, schedules } from "@/constants";
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import { icons, schedules } from "@/constants";
+import { useUser } from "@clerk/clerk-expo";
 import axios from "axios";
 import { Redirect } from "expo-router";
 
@@ -199,22 +199,6 @@ const Page = () => {
               </View>
             </View>
 
-            {/* <View className="w-full">
-              <SearchInput onSearch={handleSearch} />
-            </View>
-
-            <View className="flex flex-row justify-between">
-              {homeIcons.map(({ icon, text }) => (
-                <View key={text} className="items-center">
-                  <View className="p-5 rounded-full bg-[#FAFAFA]">
-                    <Image source={icon} className="w-8 h-8" />
-                  </View>
-                  <Text className="text-gray-400 font-semibold font-Poppins text-center text-lg">
-                    {text}
-                  </Text>
-                </View>
-              ))}
-            </View> */}
             <Text className="text-2xl pt-5 tracking-tight text-gray-900 font-PoppinsSemiBold">
               Your Appointments
             </Text>
