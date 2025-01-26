@@ -15,7 +15,7 @@ interface Appointment {
   time: string; // Time of the appointment
 }
 
-const scheduleAppointments = (doctors: Doctor[], patients: Patient[]): Appointment[] => {
+const scheduleAppointments = (doctors: Doctor[], patients: Patient[], selectedTime: string): Appointment[] => {
   const appointments: Appointment[] = [];
   const timeSlotDuration = 10; // Duration in minutes
 

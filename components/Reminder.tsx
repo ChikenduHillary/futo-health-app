@@ -29,6 +29,7 @@ const Reminder: React.FC<ReminderProps> = ({ doctors, patients }) => { // Accept
     } catch (error) {
       setMessage('Error scheduling appointments. Please try again.');
       console.error(error);
+
     }
   };
 
