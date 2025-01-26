@@ -4,11 +4,14 @@ import { useState, useCallback } from "react";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import CustomButton from "@/components/CustomButton";
-import { useSignIn } from "@clerk/clerk-expo";
-import { Link, useRouter } from "expo-router";
+import { useSignIn, useUser } from "@clerk/clerk-expo";
+import { Link, Redirect, useRouter } from "expo-router";
 
 const Chat = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const { user } = useUser();
+
+  if (user?.id) <Redirect href={"/(root)/(tabs)/home"} />;
 
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
