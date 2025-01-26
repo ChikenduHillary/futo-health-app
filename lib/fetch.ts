@@ -1,10 +1,24 @@
 import { useState, useEffect, useCallback } from "react";
 
+// Function to fetch reminders
+export const fetchReminders = async () => {
+  try {
+    const response = await fetch('/api/reminders'); // Adjust the API endpoint as needed
+    if (!response.ok) {
+      throw new Error('Failed to fetch reminders');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching reminders:', error);
+    return [];
+  }
+};
+
 export const fetchAPI = async (url: string, options?: RequestInit) => {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
