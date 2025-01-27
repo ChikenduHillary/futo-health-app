@@ -5,15 +5,18 @@ import {
   Text,
   View,
   TextInput,
-  Platform,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 import axios from "axios";
+import { useUser } from "@clerk/clerk-expo"; // Assuming you're using Clerk for authentication
 
 import CustomButton from "@/components/CustomButton";
+import { Link } from "expo-router";
+import { icons } from "@/constants";
+const BASE_URL = "https://futo-health-app-backend.onrender.com/api";
 
-// Type Definitions
 interface Doctor {
   _id: string;
   name: string;
@@ -25,15 +28,9 @@ interface Slot {
   available: boolean;
 }
 
-interface BookAppointmentPayload {
-  doctorId: string;
-  patientId: string;
-  date: string;
-  time: string;
-  description?: string;
-}
-
 const Book: React.FC = () => {
+  const { user } = useUser();
+  const [databaseUser, setDatabaseUser] = useState<any>(null);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [date, setDate] = useState<Date>(new Date());
@@ -41,13 +38,28 @@ const Book: React.FC = () => {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
 
+  // Fetch patient ID
+  useEffect(() => {
+    const fetchPatientId = async () => {
+      if (user?.emailAddresses[0]?.emailAddress) {
+        try {
+          const response = await axios.get(
+            `${BASE_URL}/users/${user.emailAddresses[0].emailAddress}`
+          );
+          if (response?.data) setDatabaseUser(response.data);
+        } catch (error) {
+          Alert.alert("Error", "Could not fetch patient information");
+        }
+      }
+    };
+    fetchPatientId();
+  }, [user]);
+
   // Fetch doctors
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get<Doctor[]>(
-          "https://futo-health-app-backend.onrender.com/api/doctors"
-        );
+        const response = await axios.get<Doctor[]>(`${BASE_URL}/doctors`);
         setDoctors(response.data);
       } catch (error) {
         Alert.alert("Error", "Could not fetch doctors");
@@ -62,19 +74,12 @@ const Book: React.FC = () => {
       if (selectedDoctor && date) {
         try {
           const formattedDate = date.toISOString().split("T")[0];
-          console.log({
-            doctorId: selectedDoctor._id,
-            date: formattedDate,
+          const response = await axios.get(`${BASE_URL}/appointments/slots`, {
+            params: {
+              doctorId: selectedDoctor._id,
+              date: formattedDate,
+            },
           });
-          const response = await axios.get(
-            "https://futo-health-app-backend.onrender.com/api/appointments/slots",
-            {
-              params: {
-                doctorId: selectedDoctor._id,
-                date: formattedDate,
-              },
-            }
-          );
 
           setAvailableSlots(response.data.availableSlots);
         } catch (error) {
@@ -86,25 +91,24 @@ const Book: React.FC = () => {
   }, [selectedDoctor, date]);
 
   const handleBookAppointment = async () => {
-    if (!selectedDoctor || !selectedSlot) {
-      Alert.alert("Error", "Please select a doctor and a time slot");
+    if (!selectedDoctor || !selectedSlot || !databaseUser) {
+      Alert.alert(
+        "Error",
+        "Please select a doctor, time slot, and ensure patient info is loaded"
+      );
       return;
     }
 
     try {
-      const payload: BookAppointmentPayload = {
+      await axios.post(`${BASE_URL}/appointments`, {
         doctorId: selectedDoctor._id,
-        patientId: "current_patient_id", // Replace with actual patient ID
+        patientId: databaseUser.user._id,
         date: date.toISOString().split("T")[0],
         time: selectedSlot,
         description,
-      };
-
-      await axios.post(
-        "https://futo-health-app-backend.onrender.com/api/appointments",
-        payload
-      );
+      });
       Alert.alert("Success", "Appointment booked successfully");
+      setDescription("");
     } catch (error) {
       Alert.alert("Error", "Booking failed");
     }
@@ -113,9 +117,14 @@ const Book: React.FC = () => {
   return (
     <SafeAreaView>
       <ScrollView className="p-5">
-        <Text className="font-PoppinsSemiBold text-3xl mb-5">
-          New Appointment
-        </Text>
+        <Link href={"/(root)/(tabs)/home"} className="flex flex-row my-10">
+          <Image
+            source={icons.backArrow}
+            className="h-8 w-8"
+            alt="back arrow"
+          />
+          <Text className="font-PoppinsSemiBold text-3xl">New Appointment</Text>
+        </Link>
 
         {/* Doctor Selection */}
         <View className="mb-5">
