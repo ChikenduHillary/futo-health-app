@@ -131,7 +131,7 @@ const Page = () => {
                 Date of Birth
               </Text>
             </View>
-            <Text className="text-gray-600 font-PoppinsSemiBold text-lg">
+            <Text className="text-gray-600 font-PoppinsSemiBold text-sm">
               {dataBaseUser?.user.dateOfBirth
                 ? new Date(dataBaseUser.user.dateOfBirth).toLocaleDateString()
                 : "Date of birth not available"}
