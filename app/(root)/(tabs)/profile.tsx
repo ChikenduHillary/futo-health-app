@@ -1,6 +1,6 @@
 import { icons } from "@/constants";
 import React, { useEffect, useState } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SignedIn, useAuth, useUser } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
@@ -70,7 +70,10 @@ const Page = () => {
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center">
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" color="#0096FF" />
+        <Text className="mt-4 text-gray-600 font-Poppins">
+          Loading profile...
+        </Text>
       </View>
     );
   }

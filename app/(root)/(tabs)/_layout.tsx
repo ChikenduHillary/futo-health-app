@@ -29,7 +29,7 @@ const TabIcon = ({
         className="w-7 h-7"
       />
       {focused && (
-        <Text className="text-[#22C55E] h-7 pt-1 font-PoppinsSemiBold tracking-tight">
+        <Text className="text-[#22C55E] h-7 pt-1 truncate w-full font-PoppinsSemiBold tracking-tight">
           {title}
         </Text>
       )}
@@ -45,8 +45,8 @@ const Layout = () => (
       tabBarShowLabel: false,
       tabBarStyle: {
         backgroundColor: "#fff",
-        paddingBottom: 0,
-        overflow: "hidden",
+        paddingBottom: 15,
+
         height: 78,
         display: "flex",
         justifyContent: "space-between",
