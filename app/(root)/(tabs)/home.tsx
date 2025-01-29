@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "@/constants";
+import { icons, schedules } from "@/constants";
 import { useUser } from "@clerk/clerk-expo";
 import axios from "axios";
 import { Redirect, router } from "expo-router";
@@ -62,6 +62,8 @@ const Page = () => {
   const [dataBaseUser, setDataBaseUser] = useState<DoctorResponse | null>(null);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log(appointments);
 
   useEffect(() => {
     const checkUserInDatabase = async () => {

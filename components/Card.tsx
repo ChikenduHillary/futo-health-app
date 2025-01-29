@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
+import moment from 'moment-timezone'; // Import moment
 import * as ImagePicker from 'expo-image-picker';
 import Person from "assets/icons/image.svg"; // Corrected import path
 import CustomButton from "./CustomButton";
@@ -67,7 +68,7 @@ const Card = (hasDetails?: boolean) => {
             <Person width={100} height={30} /> // Default icon
           )}
           <View>
-            <Text style={styles.doctorName}>Dr. Imran Syahir</Text>
+            <Text style={styles.doctorName}>Dr. Adoga James</Text>
             <Text style={styles.specialty}>General Doctor</Text>
           </View>
         </View>
@@ -128,11 +129,11 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: 'white',
-    fontSize: 14, // Reduced font size
+    fontSize: 12, // Reduced font size
   },
   timeText: {
     color: 'white',
-    fontSize: 12, // Reduced font size
+    fontSize: 10, // Reduced font size
   },
 });
 

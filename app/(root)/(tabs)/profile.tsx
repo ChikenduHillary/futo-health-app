@@ -115,7 +115,7 @@ const Page = () => {
                 Mobile Number
               </Text>
             </View>
-            <Text className="text-gray-600 font-PoppinsSemiBold text-lg">
+            <Text className="text-gray-600 font-PoppinsSemiBold text-sm">
               +234 {dataBaseUser?.user.phoneNumber}
             </Text>
           </View>
