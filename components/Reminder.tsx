@@ -16,7 +16,8 @@ const Reminder: React.FC<ReminderProps> = ({ doctors, patients }) => { // Accept
     setMessage(`Reminder set for ${reminderTime}`);
   };
 
-  const handleSchedule = () => {
+const handleSchedule = () => {
+    const selectedTime = reminderTime; // Capture the reminder time
     if (doctors.length === 0 || patients.length === 0) {
       setMessage('No doctors or patients available for scheduling.');
       return;

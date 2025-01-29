@@ -14,6 +14,7 @@ import CustomButton from "@/components/CustomButton";
 import Person from "@/assets/icons/image.svg";
 import Icon from "react-native-vector-icons/Feather";
 import { router } from "expo-router";
+import moment from "moment";
 
 const Page = () => {
   const handleSearch = (query: string) => {
@@ -29,18 +30,18 @@ const Page = () => {
         renderItem={({ item }) => (
           <View
             style={styles.shadow}
-            className="bg-white mt-4 mx-5 rounded-xl p-7"
+            className="bg-white mt-4 mx-5 rounded-xl p-6"
           >
             <View className="flex flex-row items-center gap-5">
               <Image source={icons.image} className="rounded-full w-16 h-16" />
               <View>
-                <Text className="text-2xl tracking-tighter text-gray-700 font-PoppinsSemiBold">
+                <Text className="text-2x1 tracking-tighter text-gray-800 font-PoppinsSemiBold">
                   {item.doctorsName}
                 </Text>
                 <Text className="text-gray-500">{item.specialty}</Text>
               </View>
               <View
-                className={`p-2 ${
+                className={`p-3 ${
                   item.status == "pending"
                     ? "bg-yellow-100"
                     : item.status == "approved"
@@ -51,7 +52,7 @@ const Page = () => {
                 <Text
                   className={`font-Poppins ${
                     item.status == "pending"
-                      ? "text-yellow-700"
+                      ? "text-yellow-800"
                       : item.status == "approved"
                       ? "text-green-700"
                       : "text-gray-700"
@@ -62,16 +63,16 @@ const Page = () => {
               </View>
             </View>
 
-            <View className="flex flex-row justify-between border-t-[0.8px] pt-5 mt-5 border-gray-200">
+            <View className="flex flex-row justify-between border-t-[0.9px] pt-5 mt-5 border-gray-200">
               <View className="flex flex-row gap-1 items-center">
                 <Image source={icons.calenderGray} className="w-5 h-5" />
-                <Text className="text-gray-500 text-xl font-Poppins">
+                <Text className="text-gray-700 text-sm font-Poppins">
                   {moment().tz("Africa/Lagos").format("dddd, D MMMM")}
                 </Text>
               </View>
               <View className="flex flex-row gap-1 items-center justify-center">
                 <Image source={icons.clockGray} className="w-5 h-5" />
-                <Text className="text-gray-500 text-lg font-Poppins">
+                <Text className="text-gray-700 text-sm font-Poppins">
                   11:00 - 12:00 AM
                 </Text>
               </View>
@@ -114,7 +115,6 @@ const Page = () => {
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: "#5a75a7",
-
     shadowOpacity: 0.2,
     shadowRadius: 20, // Increase radius for a softer look
     elevation: 4, // Lower elevation for a less pronounced shadow

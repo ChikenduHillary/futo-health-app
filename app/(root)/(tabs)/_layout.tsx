@@ -19,17 +19,17 @@ const TabIcon = ({
     }`}
   >
     <View
-      className={`rounded-xl flex p-2 h-12 items-center justify-center ${
+      className={`rounded-xl flex p-3 h-8 items-center justify-center ${
         focused ? " " : ""
       }`}
     >
       <Image
         source={focused ? activeSource : source}
         resizeMode="contain"
-        className="w-7 h-7"
+        className="w-20 h-8"
       />
       {focused && (
-        <Text className="text-[#22C55E] h-7 pt-1 font-PoppinsSemiBold tracking-tight">
+        <Text className="text-[#22C55E] h-20 pt-1 font-PoppinsSemiBold tracking-tight">
           {title}
         </Text>
       )}
@@ -47,7 +47,7 @@ const Layout = () => (
         backgroundColor: "#fff",
         paddingBottom: 0,
         overflow: "hidden",
-        height: 78,
+        height: 80,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",

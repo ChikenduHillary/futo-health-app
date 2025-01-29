@@ -9,7 +9,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { homeIcons, icons, schedules } from "@/constants";
+import { homeIcons, icons, schedules } from "@/constants"; // Adjusted import path
+import moment from 'moment-timezone'; // Import moment
 import { router } from "expo-router";
 
 const Page = () => {
@@ -34,13 +35,12 @@ const Page = () => {
                 Title
               </Text>
               <Text className="font-Poppins text-md text-gray-600">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio
-                accusantium provident facere architecto vero quidem sequi,
+                work in progress
               </Text>
             </View>
             <View className="w-1/6">
               <Text className="font-Poppins text-center text-gray-600">
-                8:30pm
+                {moment().tz("Africa/Lagos").format("hh:mm A")} {/* Dynamic time */}
               </Text>
             </View>
           </TouchableOpacity>

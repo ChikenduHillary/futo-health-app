@@ -100,7 +100,7 @@ export const homeIcons = [
 export const schedules = [
   {
     id: 1,
-    doctorsName: "Dr. Joshua Brostito",
+    doctorsName: "Dr. Adoga evelyn",
     date: "",
     time: "",
     specialty: "",
@@ -109,7 +109,7 @@ export const schedules = [
   },
   {
     id: 2,
-    doctorsName: "Dr. Joshua Brostito",
+    doctorsName: "Dr. Adoga precious",
     date: "",
     time: "",
     specialty: "",
@@ -118,7 +118,7 @@ export const schedules = [
   },
   {
     id: 3,
-    doctorsName: "Dr. Joshua Brostito",
+    doctorsName: "Dr. Adoga Joshua",
     date: "",
     time: "",
     specialty: "",
@@ -127,7 +127,7 @@ export const schedules = [
   },
   {
     id: 4,
-    doctorsName: "Dr. Joshua Brostito",
+    doctorsName: "Dr. Jessy paul",
     date: "",
     time: "",
     specialty: "",
@@ -136,7 +136,7 @@ export const schedules = [
   },
   {
     id: 5,
-    doctorsName: "Dr. Joshua Brostito",
+    doctorsName: "Dr. Joshua mike",
     date: "",
     time: "",
     specialty: "",
