@@ -66,7 +66,7 @@ const Page = () => {
               <View className="flex flex-row gap-1 items-center">
                 <Image source={icons.calenderGray} className="w-5 h-5" />
                 <Text className="text-gray-500 text-xl font-Poppins">
-                  Sunday, 11 June
+                  {moment().tz("Africa/Lagos").format("dddd, D MMMM")}
                 </Text>
               </View>
               <View className="flex flex-row gap-1 items-center justify-center">
