@@ -33,44 +33,13 @@ interface DoctorResponse {
   };
 }
 
-const SearchInput = ({ onSearch }: any) => {
-  const [searchText, setSearchText] = useState("");
-
-  const handleClear = () => {
-    setSearchText("");
-  };
-
-  const handleSearch = () => {
-    if (onSearch) {
-      onSearch(searchText);
-    }
-  };
-
-  return (
-    <View className="flex-row items-center bg-[#FAFAFA] rounded-lg p-4 mt-3">
-      <Image source={icons.search} alt="search" className="w-8 h-8" />
-      <TextInput
-        className="flex-1 text-base text-gray-800"
-        placeholder="Search doctor or health issue"
-        value={searchText}
-        onChangeText={setSearchText}
-        onSubmitEditing={handleSearch}
-        style={{
-          fontSize: 19,
-          fontWeight: "bold",
-          marginLeft: 5,
-          letterSpacing: 1,
-          fontFamily: "Poppins",
-        }}
-      />
-      {searchText ? (
-        <TouchableOpacity onPress={handleClear}>
-          <Text className="text-gray-500 ml-2">X</Text>
-        </TouchableOpacity>
-      ) : null}
-    </View>
-  );
-};
+interface Appointment {
+  id: string;
+  doctorsName: string;
+  specialty: string;
+  date: string;
+  time: string;
+}
 
 const Page = () => {
   const { user } = useUser();
@@ -146,7 +115,7 @@ const Page = () => {
             <View className="flex flex-row items-center gap-5">
               <Image source={icons.image} className="rounded-full w-16 h-16" />
               <View>
-                <Text className="text-xl tracking-tighter text-gray-700 font-PoppinsSemiBold"> {/* Reduced font size */}
+                <Text className="text-2xl tracking-tighter text-gray-700 font-PoppinsSemiBold">
                   {item.doctorsName}
                 </Text>
                 <Text className="text-gray-500">{item.specialty}</Text>
@@ -157,13 +126,13 @@ const Page = () => {
               <View className="flex flex-row gap-1 items-center">
                 <Image source={icons.calenderGray} className="w-5 h-5" />
                 <Text className="text-gray-500 text-xl font-Poppins">
-                  Sunday, 11 June
+                  {item.date}
                 </Text>
               </View>
               <View className="flex flex-row gap-1 items-center justify-center">
                 <Image source={icons.clockGray} className="w-5 h-5" />
                 <Text className="text-gray-500 text-lg font-Poppins">
-                  11:00 - 12:00 AM
+                  {item.time}
                 </Text>
               </View>
             </View>
@@ -173,10 +142,10 @@ const Page = () => {
           <View className="px-5 space-y-5">
             <View className="flex flex-row justify-between items-end pb-5">
               <View>
-                <Text className="text-gray-400 text-lg font-Poppins"> {/* Reduced font size */}
+                <Text className="text-gray-400 text-xl font-Poppins">
                   Hello, {dataBaseUser?.role == "Doctor" ? "Doctor" : ""}
                 </Text>
-                <Text className="text-lg font-semibold font-PoppinsSemiBold"> {/* Reduced font size */}
+                <Text className="text-xl font-semibold font-PoppinsSemiBold">
                   {dataBaseUser?.user.name}
                 </Text>
               </View>
@@ -193,8 +162,8 @@ const Page = () => {
                   className="rounded-full w-16 h-16"
                 />
                 <View>
-                  <Text className="text-white text-xl font-PoppinsBold"> {/* Reduced font size */}
-                    Dr. Adoga Enenche
+                  <Text className="text-white text-2xl font-PoppinsBold">
+                    Dr. Imran Syahir
                   </Text>
                   <Text className="text-white font-Poppins">
                     General Doctor
@@ -205,20 +174,20 @@ const Page = () => {
               <View className="flex flex-row justify-between border-t-[0.8px] pt-5 mt-5 border-gray-200">
                 <View className="flex flex-row gap-1 items-center">
                   <Image source={icons.calender} className="w-5 h-5" />
-                  <Text className="text-white text-lg font-Poppins"> {/* Reduced font size */}
-                    {moment().tz("Africa/Lagos").format("dddd, D MMMM")}
+                  <Text className="text-white text-xl font-Poppins">
+                    Sunday, 12 June
                   </Text>
                 </View>
                 <View className="flex flex-row gap-1 items-center justify-center">
                   <Image source={icons.clock} className="w-5 h-5" />
-                  <Text className="text-white text-md font-Poppins pt-1"> {/* Reduced font size */}
-                    {moment().tz("Africa/Lagos").format("hh:mm A")} - {moment().tz("Africa/Lagos").add(1, 'hours').format("hh:mm A")}
+                  <Text className="text-white text-lg font-Poppins pt-1">
+                    11:00 - 12:00 AM
                   </Text>
                 </View>
               </View>
             </View> */}
 
-            <Text className="text-xl pt-5 tracking-tight text-gray-900 font-PoppinsSemiBold"> {/* Reduced font size */}
+            <Text className="text-2xl pt-5 tracking-tight text-gray-900 font-PoppinsSemiBold">
               Your Appointments
             </Text>
           </View>
