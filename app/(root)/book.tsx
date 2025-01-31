@@ -100,6 +100,13 @@ const Book: React.FC = () => {
     }
 
     try {
+      console.log({
+        doctorId: selectedDoctor._id,
+        patientId: databaseUser.user._id,
+        date: date.toISOString().split("T")[0],
+        time: selectedSlot,
+        description,
+      });
       await axios.post(`${BASE_URL}/appointments`, {
         doctorId: selectedDoctor._id,
         patientId: databaseUser.user._id,
@@ -110,6 +117,7 @@ const Book: React.FC = () => {
       Alert.alert("Success", "Appointment booked successfully");
       setDescription("");
     } catch (error) {
+      console.log(error);
       Alert.alert("Error", "Booking failed");
     }
   };

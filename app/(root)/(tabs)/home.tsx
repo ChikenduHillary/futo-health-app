@@ -63,8 +63,6 @@ const Page = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(appointments);
-
   useEffect(() => {
     const checkUserInDatabase = async () => {
       if (!user) return;
@@ -88,6 +86,11 @@ const Page = () => {
 
     const fetchAppointments = async (userId: string) => {
       try {
+        console.log(
+          `https://futo-health-app-backend.onrender.com/api/appointments/all?${
+            dataBaseUser?.role !== "Patient" ? "doctorId" : "patientId"
+          }=${userId}`
+        );
         const response = await axios.get<AppointmentResponse>(
           `https://futo-health-app-backend.onrender.com/api/appointments/all?${
             dataBaseUser?.role !== "Patient" ? "doctorId" : "patientId"
