@@ -6,6 +6,7 @@ import { SignedIn, useAuth, useUser } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import CustomButton from "@/components/CustomButton";
 import axios from "axios";
+import { generateColorFromName } from "@/lib/utils";
 
 interface DoctorResponse {
   role: "Doctor";
@@ -81,17 +82,21 @@ const Page = () => {
   return (
     <SafeAreaView className="p-5 bg-white min-h-full">
       <View>
-        <Text className="font-PoppinsSemiBold text-3xl mt-5">User Profile</Text>
+        <Text className="font-PoppinsSemiBold text-2xl mt-5">User Profile</Text>
       </View>
 
       <View className="mt-20 w-full flex items-center">
-        <View>
-          <Image
-            source={{ uri: user?.imageUrl }}
-            width={100}
-            height={100}
-            className="rounded-full w-40 h-40 self-center"
-          />
+        <View className="flex flex-col items-center">
+          <View
+            className="h-28 w-28 flex items-center justify-center rounded-full"
+            style={{
+              backgroundColor: generateColorFromName(dataBaseUser?.user.name!),
+            }}
+          >
+            <Text className="text-white text-6xl ">
+              {dataBaseUser?.user.name[0]}
+            </Text>
+          </View>
           <Text className="font-PoppinsBold text-center text-3xl text-gray-800 mt-5">
             {dataBaseUser?.user.name}
           </Text>

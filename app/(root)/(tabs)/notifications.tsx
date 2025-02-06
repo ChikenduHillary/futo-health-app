@@ -55,7 +55,7 @@ const Page = () => {
   if (loading) {
     return (
       <SafeAreaView className="bg-white min-h-full pt-10 flex justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0096FF" />
         <Text className="font-Poppins text-gray-600 mt-2">Loading...</Text>
       </SafeAreaView>
     );

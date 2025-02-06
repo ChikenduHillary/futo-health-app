@@ -14,12 +14,14 @@ import { useUser } from "@clerk/clerk-expo";
 import axios from "axios";
 import { Redirect, router } from "expo-router";
 import dayjs from "dayjs";
+import { generateColorFromName } from "@/lib/utils";
 
 interface DoctorResponse {
   role: "Doctor" | "Patient";
   user: {
     _id: string;
     name: string;
+    accountType: string;
     specialization: string;
     availability: Array<{
       date: string;
@@ -62,6 +64,7 @@ const Page = () => {
   const [dataBaseUser, setDataBaseUser] = useState<DoctorResponse | null>(null);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(dataBaseUser);
 
   useEffect(() => {
     const checkUserInDatabase = async () => {
@@ -86,14 +89,11 @@ const Page = () => {
 
     const fetchAppointments = async (userId: string) => {
       try {
-        console.log(
-          `https://futo-health-app-backend.onrender.com/api/appointments/all?${
-            dataBaseUser?.role !== "Patient" ? "doctorId" : "patientId"
-          }=${userId}`
-        );
         const response = await axios.get<AppointmentResponse>(
           `https://futo-health-app-backend.onrender.com/api/appointments/all?${
-            dataBaseUser?.role !== "Patient" ? "doctorId" : "patientId"
+            dataBaseUser?.user.accountType !== "patient"
+              ? "doctorId"
+              : "patientId"
           }=${userId}`
         );
 
@@ -149,10 +149,16 @@ const Page = () => {
               className="bg-white mt-4 mx-5 rounded-xl p-7"
             >
               <View className="flex flex-row items-center gap-5">
-                <Image
-                  source={icons.image}
-                  className="rounded-full w-16 h-16"
-                />
+                <View
+                  className="h-16 w-16 flex items-center justify-center rounded-full"
+                  style={{
+                    backgroundColor: generateColorFromName(item.doctorsName),
+                  }}
+                >
+                  <Text className="text-white text-4xl ">
+                    {item.doctorsName[0]}
+                  </Text>
+                </View>
                 <View>
                   <Text className="text-lg tracking-tighter text-gray-700 font-PoppinsSemiBold">
                     {item.doctorsName}
@@ -189,10 +195,18 @@ const Page = () => {
                   {dataBaseUser?.user.name}
                 </Text>
               </View>
-              <Image
-                source={{ uri: user?.imageUrl }}
-                className="rounded-full w-16 h-16"
-              />
+              <View
+                className="h-16 w-16 flex items-center justify-center rounded-full"
+                style={{
+                  backgroundColor: generateColorFromName(
+                    dataBaseUser?.user.name!
+                  ),
+                }}
+              >
+                <Text className="text-white text-4xl ">
+                  {dataBaseUser?.user.name[0]}
+                </Text>
+              </View>
             </View>
 
             <View className="bg-green-500 rounded-xl p-7">
@@ -204,12 +218,20 @@ const Page = () => {
                     </Text>
                   )}
                   <View className="flex flex-row items-center gap-5 mt-2">
-                    <Image
-                      source={icons.image}
-                      className="rounded-full w-16 h-16"
-                    />
+                    <View
+                      className="h-16 w-16 flex items-center justify-center rounded-full"
+                      style={{
+                        backgroundColor: generateColorFromName(
+                          latestAppointment.doctorsName
+                        ),
+                      }}
+                    >
+                      <Text className="text-white text-4xl ">
+                        {latestAppointment.doctorsName[0]}
+                      </Text>
+                    </View>
                     <View>
-                      <Text className="text-white text- font-PoppinsBold">
+                      <Text className="text-white font-PoppinsBold">
                         {latestAppointment.doctorsName}
                       </Text>
                       <Text className="text-white font-Poppins">

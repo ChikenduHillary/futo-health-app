@@ -96,7 +96,6 @@ const Layout = () => (
             focused={focused}
             source={icons.notification}
             title="Notifications"
-            title={<Text style={{ fontSize: 11 }}>Notifications</Text>} // Adjusted text size
             activeSource={icons.notificationActive}
           />
         ),

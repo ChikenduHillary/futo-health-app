@@ -16,6 +16,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { router } from "expo-router";
 import { useUser } from "@clerk/clerk-expo";
 import axios from "axios";
+import { generateColorFromName } from "@/lib/utils";
 
 interface AppointmentResponse {
   future: Array<{
@@ -184,7 +185,14 @@ const Page = () => {
     <View style={styles.shadow} className="bg-white mt-4 mx-5 rounded-xl p-7">
       <View className="flex flex-row justify-between">
         <View className="flex flex-row items-center gap-5">
-          <Image source={icons.image} className="rounded-full w-16 h-16" />
+          <View
+            className="h-16 w-16 flex items-center justify-center rounded-full"
+            style={{
+              backgroundColor: generateColorFromName(item.doctor?.name!),
+            }}
+          >
+            <Text className="text-white text-4xl ">{item.doctor?.name[0]}</Text>
+          </View>
           <View>
             <Text className="text-lg tracking-tighter text-gray-700 font-PoppinsSemiBold">
               {item.doctor?.name}
