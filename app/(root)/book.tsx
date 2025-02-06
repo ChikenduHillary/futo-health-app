@@ -118,7 +118,7 @@ const Book: React.FC = () => {
       setDescription("");
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", "Booking failed");
+      Alert.alert("Error", "Slot already booked");
     }
   };
 

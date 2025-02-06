@@ -14,6 +14,8 @@ interface DoctorResponse {
     _id: string;
     name: string;
     specialization: string;
+    gender: string;
+    accountType: string;
     availability: Array<{
       date: string;
       slots: Array<{
@@ -143,6 +145,40 @@ const Page = () => {
               {dataBaseUser?.user.dateOfBirth
                 ? new Date(dataBaseUser.user.dateOfBirth).toLocaleDateString()
                 : "Date of birth not available"}
+            </Text>
+          </View>
+          <View className="w-full flex flex-row items-center justify-between">
+            <View className="flex flex-row items-center gap-5">
+              <View className="bg-gray-100 flex items-center justify-center rounded-r-full h-14 w-14">
+                {/* <Image
+                  source={icons.}
+                  width={50}
+                  height={50}
+                  className="h-6 w-6"
+                /> */}
+              </View>
+              <Text className="font-Poppins text-gray-500 text-lg">Gender</Text>
+            </View>
+            <Text className="text-gray-600 font-PoppinsSemiBold text-sm">
+              {dataBaseUser?.user.gender}
+            </Text>
+          </View>
+          <View className="w-full flex flex-row items-center justify-between">
+            <View className="flex flex-row items-center gap-5">
+              <View className="bg-gray-100 flex items-center justify-center rounded-r-full h-14 w-14">
+                <Image
+                  source={icons.date}
+                  width={50}
+                  height={50}
+                  className="h-6 w-6"
+                />
+              </View>
+              <Text className="font-Poppins text-gray-500 text-lg">
+                Account Type
+              </Text>
+            </View>
+            <Text className="text-gray-600 font-PoppinsSemiBold text-sm">
+              {dataBaseUser?.user.accountType}
             </Text>
           </View>
         </View>

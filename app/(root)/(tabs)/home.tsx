@@ -89,6 +89,13 @@ const Page = () => {
 
     const fetchAppointments = async (userId: string) => {
       try {
+        console.log(
+          `https://futo-health-app-backend.onrender.com/api/appointments/all?${
+            dataBaseUser?.user.accountType !== "patient"
+              ? "doctorId"
+              : "patientId"
+          }=${userId}`
+        );
         const response = await axios.get<AppointmentResponse>(
           `https://futo-health-app-backend.onrender.com/api/appointments/all?${
             dataBaseUser?.user.accountType !== "patient"
